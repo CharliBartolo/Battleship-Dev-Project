@@ -101,6 +101,12 @@ namespace MyGame.src
                         break;
                     }
 
+                case var case2 when case2 == AIOption.Easy:
+                    {
+                        _ai = new AIEasyPlayer(_theGame);
+                        break;
+                    }
+
                 default:
                     {
                         _ai = new AIHardPlayer(_theGame);
