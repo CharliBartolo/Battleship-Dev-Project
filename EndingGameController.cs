@@ -23,7 +23,11 @@ namespace MyGame.src
             toDraw.Y = 250;
             toDraw.Width = SwinGame.ScreenWidth();
             toDraw.Height = SwinGame.ScreenHeight();
-            if (GameController.HumanPlayer.IsDestroyed)
+            if ((int)SwinGame.TimerTicks(GameController.GameTimer) <= 5500)
+            {
+                whatShouldIPrint = "OUT OF TIME!";
+            }
+            else if (GameController.HumanPlayer.IsDestroyed)
             {
                 whatShouldIPrint = "YOU LOSE!";
             }

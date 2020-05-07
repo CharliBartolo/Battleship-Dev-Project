@@ -23,6 +23,7 @@ namespace MyGame.src
             NewImage("Menu", "main_page.jpg");
             NewImage("Discovery", "discover.jpg");
             NewImage("Deploy", "deploy.jpg");
+            NewImage("Guide", "guide.jpg"); 
 
             // Deployment
             NewImage("LeftRightButton", "deploy_dir_button_horiz.png");

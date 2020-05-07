@@ -21,7 +21,8 @@ namespace MyGame.src
         private static AIPlayer _ai;
         private static Stack<GameState> _state = new Stack<GameState>();
         private static AIOption _aiSetting;
-
+        private static Timer gameTimer = SwinGame.CreateTimer();
+        private static bool muteSong;
         /// <summary>
         /// Returns the current state of the game, indicating which screen is
         /// currently being used
@@ -248,6 +249,40 @@ namespace MyGame.src
         /// This adds the players to the game before switching
         /// state.
         /// </remarks>
+        
+            public static Timer GameTimer { get { return gameTimer; } }
+
+        public static string TimeRemaining()
+        {
+            int timeRemaining = 180000;
+            timeRemaining -= (int)SwinGame.TimerTicks(GameTimer);
+            timeRemaining /= 1000;
+
+            if (timeRemaining < 0)
+            {
+                timeRemaining = 0;
+                SwitchState(GameState.EndingGame);
+            }
+
+            int minutes;
+            int seconds;
+
+            minutes = timeRemaining / 60;
+            seconds = timeRemaining - (minutes * 60);
+
+            string stringtimeRemaining;
+
+            if (seconds < 10)
+            {
+                stringtimeRemaining = minutes + ":0" + seconds;
+            }
+            else
+            {
+                stringtimeRemaining = minutes + ":" + seconds;
+            }
+
+            return stringtimeRemaining;
+        }
         public static void EndDeployment()
         {
             // deploy the players
@@ -330,42 +365,56 @@ namespace MyGame.src
                 case var @case when @case == GameState.ViewingMainMenu:
                     {
                         MenuController.HandleMainMenuInput();
+                        SwinGame.ResetTimer(gameTimer);
                         break;
                     }
 
                 case var case1 when case1 == GameState.ViewingGameMenu:
                     {
                         MenuController.HandleGameMenuInput();
+                        SwinGame.StopTimer(gameTimer);
                         break;
                     }
-
+            
                 case var case2 when case2 == GameState.AlteringSettings:
                     {
                         MenuController.HandleSetupMenuInput();
+                        SwinGame.StopTimer(gameTimer);
                         break;
                     }
 
                 case var case3 when case3 == GameState.Deploying:
                     {
                         DeploymentController.HandleDeploymentInput();
+                        SwinGame.ResetTimer(gameTimer);
                         break;
                     }
 
                 case var case4 when case4 == GameState.Discovering:
                     {
                         DiscoveryController.HandleDiscoveryInput();
+                        if (SwinGame.TimerTicks(gameTimer) == 0)
+                        {
+                            SwinGame.StartTimer(gameTimer);
+                        }
                         break;
                     }
 
                 case var case5 when case5 == GameState.EndingGame:
                     {
                         EndingGameController.HandleEndOfGameInput();
+                        SwinGame.ResetTimer(gameTimer);
                         break;
                     }
 
                 case var case6 when case6 == GameState.ViewingHighScores:
                     {
                         HighScoreController.HandleHighScoreInput();
+                        break;
+                    }
+                case var case7 when case7 == GameState.ViewingGuide:
+                    {
+                        GuideController.HandleInstructionsInput();
                         break;
                     }
             }
@@ -453,6 +502,20 @@ namespace MyGame.src
             AddNewState(newState);
         }
 
+        public static void Mute()
+        {
+            if (muteSong == false)
+            {
+                muteSong = true;
+                SwinGame.SetMusicVolume(0);
+            }
+            else if (muteSong == true)
+            {
+                muteSong = false;
+                SwinGame.SetMusicVolume(50);
+            }
+        }
+
         /// <summary>
         /// Ends the current state, returning to the prior state
         /// </summary>
@@ -469,5 +532,6 @@ namespace MyGame.src
         {
             _aiSetting = setting;
         }
+
     }
 }

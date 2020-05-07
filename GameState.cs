@@ -28,6 +28,7 @@ namespace MyGame.src
         // '' </summary>
         ViewingHighScores,
 
+        ViewingGuide,
         // '' <summary>
         // '' The player is altering the game settings
         // '' </summary>

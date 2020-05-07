@@ -20,7 +20,7 @@ namespace MyGame.src
         /// <remarks>
         /// These are the text captions for the menu items.
         /// </remarks>
-        private readonly static string[][] _menuStructure = new[] { new string[] { "PLAY", "SETUP", "SCORES", "QUIT" }, new string[] { "RETURN", "SURRENDER", "QUIT" }, new string[] { "EASY", "MEDIUM", "HARD" } };
+        private readonly static string[][] _menuStructure = new[] { new string[] { "PLAY", "SETUP", "SCORES", "GUIDE","MUTE", "QUIT"  }, new string[] { "RETURN", "SURRENDER", "QUIT" }, new string[] { "EASY", "MEDIUM", "HARD" } };
 
 
         private const int MENU_TOP = 575;
@@ -36,7 +36,9 @@ namespace MyGame.src
         private const int MAIN_MENU_PLAY_BUTTON = 0;
         private const int MAIN_MENU_SETUP_BUTTON = 1;
         private const int MAIN_MENU_TOP_SCORES_BUTTON = 2;
-        private const int MAIN_MENU_QUIT_BUTTON = 3;
+        private const int MAIN_MENU_GUIDE_BUTTON = 3;
+        private const int MAIN_MENU_MUTE_BUTTON = 4;
+        private const int MAIN_MENU_QUIT_BUTTON = 5;
         private const int SETUP_MENU_EASY_BUTTON = 0;
         private const int SETUP_MENU_MEDIUM_BUTTON = 1;
         private const int SETUP_MENU_HARD_BUTTON = 2;
@@ -278,6 +280,11 @@ namespace MyGame.src
                         break;
                     }
 
+                case MAIN_MENU_GUIDE_BUTTON:
+                    {
+                        GameController.AddNewState(GameState.ViewingGuide);
+                        break;
+                    }
                 case MAIN_MENU_QUIT_BUTTON:
                     {
                         GameController.EndCurrentState();
@@ -336,7 +343,11 @@ namespace MyGame.src
                         GameController.EndCurrentState(); // end game
                         break;
                     }
-
+                case MAIN_MENU_MUTE_BUTTON:
+                    {
+                        GameController.Mute();
+                        break;
+                    }
                 case GAME_MENU_QUIT_BUTTON:
                     {
                         GameController.AddNewState(GameState.Quitting);
