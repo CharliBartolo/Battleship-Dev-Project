@@ -20,7 +20,7 @@ namespace MyGame.src
         /// <remarks>
         /// These are the text captions for the menu items.
         /// </remarks>
-        private readonly static string[][] _menuStructure = new[] { new string[] { "PLAY", "SETUP", "SCORES", "GUIDE","MUTE", "QUIT"  }, new string[] { "RETURN", "SURRENDER", "QUIT" }, new string[] { "EASY", "MEDIUM", "HARD" } };
+        private readonly static string[][] _menuStructure = new[] { new string[] { "PLAY", "SETUP", "SCORES", "GUIDE","MUTE", "QUIT"  }, new string[] { "RETURN", "SURRENDER","MUTE", "QUIT" }, new string[] { "EASY", "MEDIUM", "HARD" } };
 
 
         private const int MENU_TOP = 575;
@@ -45,7 +45,8 @@ namespace MyGame.src
         private const int SETUP_MENU_EXIT_BUTTON = 3;
         private const int GAME_MENU_RETURN_BUTTON = 0;
         private const int GAME_MENU_SURRENDER_BUTTON = 1;
-        private const int GAME_MENU_QUIT_BUTTON = 2;
+        private const int GAME_MENU_MUTE_BUTTON = 2;
+        private const int GAME_MENU_QUIT_BUTTON = 3;
         private readonly static Color MENU_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
         private readonly static Color HIGHLIGHT_COLOR = SwinGame.RGBAColor(1, 57, 86, 255);
 
@@ -285,6 +286,12 @@ namespace MyGame.src
                         GameController.AddNewState(GameState.ViewingGuide);
                         break;
                     }
+
+                case MAIN_MENU_MUTE_BUTTON:
+                    {
+                        GameController.Mute();
+                        break;
+                    }
                 case MAIN_MENU_QUIT_BUTTON:
                     {
                         GameController.EndCurrentState();
@@ -343,7 +350,7 @@ namespace MyGame.src
                         GameController.EndCurrentState(); // end game
                         break;
                     }
-                case MAIN_MENU_MUTE_BUTTON:
+                case GAME_MENU_MUTE_BUTTON:
                     {
                         GameController.Mute();
                         break;

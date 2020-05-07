@@ -58,7 +58,7 @@ namespace MyGame.src
 
         private static void LoadMusic()
         {
-            NewMusic("Background", "horrordrone.mp3");
+            NewMusic("Background", "horrordrone.wav");
         }
 
         /// <summary>
