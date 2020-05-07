@@ -132,6 +132,14 @@ public class Ship
 		_col = col;
 		_direction = direction;
 	}
+
+    public List<Tile> Tiles
+    {
+        get
+        {
+            return _tiles;
+        }
+    }
 }
 
 //=======================================================

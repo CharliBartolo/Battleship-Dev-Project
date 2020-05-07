@@ -61,6 +61,10 @@ namespace MyGame.src
             {
                 ShipName selected;
                 selected = GetShipMouseIsOver();
+
+                if (selected == ShipName.None)
+                    selected = GetShipMouseIsOverInGrid();
+
                 if (selected != ShipName.None)
                 {
                     _selectedShip = selected;
@@ -191,6 +195,36 @@ namespace MyGame.src
                 if (UtilityFunctions.IsMouseInRectangle(SHIPS_LEFT, SHIPS_TOP + i * SHIPS_HEIGHT, SHIPS_WIDTH, SHIPS_HEIGHT))
                 {
                     return sn;
+                }              
+    
+            }
+
+            return ShipName.None;
+        }
+
+        private static ShipName GetShipMouseIsOverInGrid()
+        {
+            Point2D mouse;
+            mouse = SwinGame.MousePosition();
+
+            // Calculate the row/col clicked
+            int row, col;
+            row = Convert.ToInt32(Math.Floor((mouse.Y - UtilityFunctions.FIELD_TOP) / (UtilityFunctions.CELL_HEIGHT + UtilityFunctions.CELL_GAP)));
+            col = Convert.ToInt32(Math.Floor((mouse.X - UtilityFunctions.FIELD_LEFT) / (UtilityFunctions.CELL_WIDTH + UtilityFunctions.CELL_GAP)));
+
+            foreach (ShipName sn in Enum.GetValues(typeof(ShipName)))
+            {
+                if (GameController.HumanPlayer.Ship(sn) != null)
+                {
+                    Ship localShip = GameController.HumanPlayer.Ship(sn);
+                    
+                    foreach (Tile tile in localShip.Tiles)
+                    {
+                        if (row == tile.Row && col == tile.Column)
+                        {
+                            return sn;
+                        }
+                    }
                 }
             }
 
